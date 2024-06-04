@@ -1,6 +1,6 @@
 # snakemake-pixi
 
-Building snakemake workflows with pixi ✨
+This repository contains the analysis for Claudia's HD-zipper question.
 
 ## Installation
 

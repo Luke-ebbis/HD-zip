@@ -1,0 +1,5 @@
+tacaaataatGCCATTAAATTGATacatttaaagagagaggtttgactaatgaccaacttttaacctCCAAATTAGGaaataaatacatt
+
+capitalized:
+left: HDG motif
+rigth: MADS motif
