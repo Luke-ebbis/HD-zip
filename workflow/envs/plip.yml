@@ -1,0 +1,9 @@
+channels:
+  - conda-forge
+dependencies:
+  - pymol-open-source
+  - imagemagick
+  - apptainer
+  - biopython
+  - wget
+  - imagemagick

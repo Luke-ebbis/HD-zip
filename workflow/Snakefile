@@ -7,6 +7,50 @@
 ##
 
 
+rule all:
+  input:
+    expand("results/data/converted/{jobs}/{jobs}_model_{number}.cif.pdb",
+        jobs=glob_wildcards("data/af-3-jobs/{jobs}/{name}_model_{number}").jobs,
+        number=[0]),
+    expand("results/data/plip/{jobs}/{jobs}_model_{number}",
+        jobs=glob_wildcards("data/af-3-jobs/{jobs}/{name}_model_{number}").jobs,
+        number=[0])
+
+
+wildcard_constraints:
+  job="\w+",
+  name="\w+"
+
+rule setup_plip:
+  conda:
+    "envs/plip.yml"
+  output:
+    "results/dependencies/plip.simg"
+  shell:
+    "wget -O {output} 'https://github.com/pharmai/plip/releases/download/v2.3.0/plip_v2.3.0.simg'"
+
+rule run_plip:
+  conda:
+    "envs/plip.yml"
+  input:
+    image="results/dependencies/plip.simg",
+    structure="results/data/converted/{job}/{name}_model_{number}.cif.pdb"
+  output:
+    directory("results/data/plip/{job}/{name}_model_{number}")
+  shell:
+    "apptainer run {input.image} --file {input.structure} -o {output} -yvxpt"
+
+rule convert:
+  conda:
+    "envs/plip.yml"
+  input:
+    "data/af-3-jobs/{job}/{name}_model_{number}.cif"
+  output:
+    "results/data/converted/{job}/{name}_model_{number}.cif.pdb"
+  shell:
+    "python workflow/scripts/convert.py {input} {output}"
+
+
 ## help:
 ##    Show the help.
 ##
